@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<application-state>
+  <context id="">
+    <application id="teams.desktop" score="6106.2041473388672" last-seen="1645812447"/>
+    <application id="org.gnome.Evince.desktop" score="0.5" last-seen="1645794215"/>
+    <application id="org.gnome.tweaks.desktop" score="3" last-seen="1645802987"/>
+    <application id="org.gnome.FileRoller.desktop" score="3" last-seen="1645794187"/>
+    <application id="google-chrome.desktop" score="13601.650623985857" last-seen="1645817540"/>
+    <application id="multimc.desktop" score="2" last-seen="1645809659"/>
+    <application id="software-properties-gtk.desktop" score="1" last-seen="1645806401"/>
+    <application id="apple-music-for-linux_apple-music-for-linux.desktop" score="5366.8920822143555" last-seen="1643801334"/>
+    <application id="gnome-control-center.desktop" score="28.5" last-seen="1645802999"/>
+    <application id="discord.desktop" score="4897.1594009399414" last-seen="1645816143"/>
+    <application id="org.gnome.gedit.desktop" score="0.5" last-seen="1645789741"/>
+    <application id="org.gnome.Nautilus.desktop" score="15.5" last-seen="1645805740"/>
+    <application id="com.obsproject.Studio.desktop" score="39" last-seen="1645804751"/>
+    <application id="snap-store_ubuntu-software.desktop" score="1" last-seen="1645270321"/>
+    <application id="org.gnome.Calculator.desktop" score="1" last-seen="1645811797"/>
+    <application id="firefox.desktop" score="18.5" last-seen="1645794642"/>
+    <application id="org.gnome.Terminal.desktop" score="129" last-seen="1645814925"/>
+    <application id="spotify_spotify.desktop" score="346.5" last-seen="1645815088"/>
+    <application id="code.desktop" score="0" last-seen="1645787683"/>
+    <application id="vmware-workstation.desktop" score="0" last-seen="1645789477"/>
+    <application id="discord_discord.desktop" score="49.5" last-seen="1645790305"/>
+    <application id="wireshark.desktop" score="285.5" last-seen="1645809371"/>
+    <application id="org.gnome.Extensions.desktop" score="4.5" last-seen="1645794467"/>
+  </context>
+</application-state>
