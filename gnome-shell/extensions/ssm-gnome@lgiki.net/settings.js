@@ -6,19 +6,26 @@ var Prefs = class Prefs {
     constructor() {
         const settings = ExtensionUtils.getSettings(SETTING_SCHEMA);
 
+        this.SHOW_PERCENT_SIGN = new PrefValue(settings, 'show-percent-sign', 'boolean');
         this.IS_CPU_USAGE_ENABLE = new PrefValue(settings, 'is-cpu-usage-enable', 'boolean');
         this.CPU_USAGE_TEXT = new PrefValue(settings, 'cpu-usage-text', 'string');
         this.IS_MEMORY_USAGE_ENABLE = new PrefValue(settings, 'is-memory-usage-enable', 'boolean');
         this.MEMORY_USAGE_TEXT = new PrefValue(settings, 'memory-usage-text', 'string');
-        this.IS_DOWNLOAD_SPEED_ENABLE = new PrefValue(settings, 'is-download-speed-enable', 'boolean');
+        this.IS_DOWNLOAD_SPEED_ENABLE = new PrefValue(
+            settings,
+            'is-download-speed-enable',
+            'boolean',
+        );
         this.DOWNLOAD_SPEED_TEXT = new PrefValue(settings, 'download-speed-text', 'string');
         this.IS_UPLOAD_SPEED_ENABLE = new PrefValue(settings, 'is-upload-speed-enable', 'boolean');
         this.UPLOAD_SPEED_TEXT = new PrefValue(settings, 'upload-speed-text', 'string');
         this.ITEM_SEPARATOR = new PrefValue(settings, 'item-separator', 'string');
         this.REFRESH_INTERVAL = new PrefValue(settings, 'refresh-interval', 'int');
         this.FONT_FAMILY = new PrefValue(settings, 'font-family', 'string');
+        this.FONT_SIZE = new PrefValue(settings, 'font-size', 'string');
+        this.TEXT_COLOR = new PrefValue(settings, 'text-color', 'string');
     }
-}
+};
 
 class PrefValue {
     constructor(gioSettings, key, type) {

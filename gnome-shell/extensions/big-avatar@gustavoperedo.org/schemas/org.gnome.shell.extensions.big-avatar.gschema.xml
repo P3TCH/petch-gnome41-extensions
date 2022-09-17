@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="BigAvatar">
+    <schema id="org.gnome.shell.extensions.big-avatar" path="/org/gnome/shell/extensions/big-avatar/">
+
+        <key name="horizontalmode" type="b">
+            <default>false</default>
+            <summary>Horizontal Orientation</summary>
+            <description>Turn on to have the user icon and username/name on the same line</description>
+        </key>
+
+        <key name="command" type="s">
+            <default>"gnome-extensions-app"</default>
+            <summary>Shell Command</summary>
+            <description>Shell command defined by the user</description>
+        </key>
+
+    </schema>
+</schemalist>

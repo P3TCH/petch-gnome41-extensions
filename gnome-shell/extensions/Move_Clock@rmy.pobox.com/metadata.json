@@ -4,9 +4,10 @@
   "name": "Frippery Move Clock",
   "shell-version": [
     "40",
-    "41"
+    "41",
+    "42"
   ],
   "url": "http://frippery.org/extensions",
   "uuid": "Move_Clock@rmy.pobox.com",
-  "version": 25
+  "version": 26
 }

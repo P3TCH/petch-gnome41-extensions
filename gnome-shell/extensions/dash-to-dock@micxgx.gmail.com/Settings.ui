@@ -308,6 +308,11 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkCheckButton" id="apply_gloss_effect_checkbutton">
+                        <property name="label" translatable="yes">Apply glossy effect.</property>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkBox">
                         <property name="can_focus">0</property>
                         <child>
@@ -916,7 +921,7 @@
                                 <property name="can_focus">0</property>
                                 <property name="hexpand">1</property>
                                 <property name="halign">start</property>
-                                <property name="label" translatable="yes">Show favorite applications</property>
+                                <property name="label" translatable="yes">Show pinned applications</property>
 
                                 <layout>
                                   <property name="column">0</property>
@@ -975,6 +980,19 @@
                               </object>
                             </child>
                             <child>
+                              <object class="GtkCheckButton" id="application_button_urgent_button">
+                                <property name="label" translatable="yes">Show urgent windows despite current workspace.</property>
+                                <property name="halign">start</property>
+                                <property name="margin_top">12</property>
+
+                                <layout>
+                                  <property name="column">0</property>
+                                  <property name="row">3</property>
+                                  <property name="column-span">2</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
                               <object class="GtkCheckButton" id="application_button_monitor_isolation_button">
                                 <property name="label" translatable="yes">Isolate monitors.</property>
                                 <property name="halign">start</property>
@@ -982,7 +1000,7 @@
 
                                 <layout>
                                   <property name="column">0</property>
-                                  <property name="row">3</property>
+                                  <property name="row">4</property>
                                   <property name="column-span">2</property>
                                 </layout>
                               </object>
@@ -1190,11 +1208,37 @@
                                 <property name="can_focus">0</property>
                                 <property name="hexpand">1</property>
                                 <property name="halign">start</property>
-                                <property name="label" translatable="yes">Show mounted volumes and devices</property>
+                                <property name="label" translatable="yes">Show volumes and devices</property>
 
                                 <layout>
                                   <property name="column">0</property>
                                   <property name="row">0</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="show_only_mounted_devices_check">
+                                <property name="label" translatable="yes">Only if mounted</property>
+                                <property name="halign">start</property>
+                                <property name="margin_top">12</property>
+
+                                <layout>
+                                  <property name="column">0</property>
+                                  <property name="row">1</property>
+                                  <property name="column-span">1</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="show_network_volumes_check">
+                                <property name="label" translatable="yes">Include network volumes</property>
+                                <property name="halign">start</property>
+                                <property name="margin_top">12</property>
+
+                                <layout>
+                                  <property name="column">0</property>
+                                  <property name="row">2</property>
+                                  <property name="column-span">2</property>
                                 </layout>
                               </object>
                             </child>
@@ -1760,6 +1804,7 @@
                                       <item translatable="yes">Solid</item>
                                       <item translatable="yes">Ciliora</item>
                                       <item translatable="yes">Metro</item>
+                                      <item translatable="yes">Binary</item>
                                     </items>
                                   </object>
                                 </child>
@@ -1988,6 +2033,35 @@
                             </child>
                             <child>
                               <object class="GtkSwitch" id="force_straight_corner_switch">
+                                <property name="valign">center</property>
+                                <property name="margin_start">3</property>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                      <object class="GtkListBoxRow">
+                        <property name="width_request">100</property>
+                        <property name="height_request">80</property>
+                        <property name="child">
+                          <object class="GtkBox">
+                            <property name="can_focus">0</property>
+                            <property name="spacing">32</property>
+                            <property name="margin_start">12</property>
+                            <property name="margin_end">12</property>
+                            <property name="margin_top">12</property>
+                            <property name="margin_bottom">12</property>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="hexpand">1</property>
+                                <property name="can_focus">0</property>
+                                <property name="valign">center</property>
+                                <property name="halign">start</property>
+                                <property name="label" translatable="yes">Show overview on startup</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkSwitch" id="show_overview_on_startup_switch">
                                 <property name="valign">center</property>
                                 <property name="margin_start">3</property>
                               </object>
@@ -2589,6 +2663,18 @@ See the &lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&
                         </layout>
                       </object>
                     </child>
+                    <child>
+                      <object class="GtkCheckButton" id="show_dock_urgent_notify_checkbutton">
+                        <property name="label" translatable="yes">Show dock for urgent notifications</property>
+                        <property name="margin_top">12</property>
+
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">4</property>
+                          <property name="column-span">2</property>
+                        </layout>
+                      </object>
+                    </child>
                   </object>
                 </property>
               </object>
@@ -2668,6 +2754,13 @@ See the &lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&
                             <property name="label" translatable="yes">Only maximized windows</property>
                             <property name="group">all_windows_radio_button</property>
                             <signal name="toggled" handler="maximized_windows_radio_button_toggled_cb" />
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton" id="always_on_top_radio_button">
+                            <property name="label" translatable="yes">Always on top</property>
+                            <property name="group">all_windows_radio_button</property>
+                            <signal name="toggled" handler="always_on_top_radio_button_toggled_cb" />
                           </object>
                         </child>
                         <layout>

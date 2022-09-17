@@ -1,28 +1,29 @@
 <?xml version="1.0"?>
 <application-state>
   <context id="">
-    <application id="teams.desktop" score="6106.2041473388672" last-seen="1645812447"/>
-    <application id="org.gnome.Evince.desktop" score="0.5" last-seen="1645794215"/>
-    <application id="org.gnome.tweaks.desktop" score="3" last-seen="1645802987"/>
-    <application id="org.gnome.FileRoller.desktop" score="3" last-seen="1645794187"/>
-    <application id="google-chrome.desktop" score="13601.650623985857" last-seen="1645817540"/>
-    <application id="multimc.desktop" score="2" last-seen="1645809659"/>
-    <application id="software-properties-gtk.desktop" score="1" last-seen="1645806401"/>
-    <application id="apple-music-for-linux_apple-music-for-linux.desktop" score="5366.8920822143555" last-seen="1643801334"/>
-    <application id="gnome-control-center.desktop" score="28.5" last-seen="1645802999"/>
-    <application id="discord.desktop" score="4897.1594009399414" last-seen="1645816143"/>
-    <application id="org.gnome.gedit.desktop" score="0.5" last-seen="1645789741"/>
-    <application id="org.gnome.Nautilus.desktop" score="15.5" last-seen="1645805740"/>
-    <application id="com.obsproject.Studio.desktop" score="39" last-seen="1645804751"/>
-    <application id="snap-store_ubuntu-software.desktop" score="1" last-seen="1645270321"/>
-    <application id="org.gnome.Calculator.desktop" score="1" last-seen="1645811797"/>
-    <application id="firefox.desktop" score="18.5" last-seen="1645794642"/>
-    <application id="org.gnome.Terminal.desktop" score="129" last-seen="1645814925"/>
-    <application id="spotify_spotify.desktop" score="346.5" last-seen="1645815088"/>
-    <application id="code.desktop" score="0" last-seen="1645787683"/>
-    <application id="vmware-workstation.desktop" score="0" last-seen="1645789477"/>
-    <application id="discord_discord.desktop" score="49.5" last-seen="1645790305"/>
-    <application id="wireshark.desktop" score="285.5" last-seen="1645809371"/>
-    <application id="org.gnome.Extensions.desktop" score="4.5" last-seen="1645794467"/>
+    <application id="org.gnome.Evince.desktop" score="510.5" last-seen="1663350380"/>
+    <application id="org.gnome.tweaks.desktop" score="19" last-seen="1663089914"/>
+    <application id="multimc.desktop" score="2" last-seen="1663350714"/>
+    <application id="google-chrome.desktop" score="18748.5" last-seen="1663442129"/>
+    <application id="org.gnome.Shell.Extensions.desktop" score="15.5" last-seen="1663267144"/>
+    <application id="org.gnome.Software.desktop" score="9" last-seen="1663081848"/>
+    <application id="steam.desktop" score="2" last-seen="1663271762"/>
+    <application id="gnome-control-center.desktop" score="67.5" last-seen="1663433385"/>
+    <application id="discord.desktop" score="14818" last-seen="1663441680"/>
+    <application id="org.gnome.eog.desktop" score="7" last-seen="1663069979"/>
+    <application id="org.gnome.Nautilus.desktop" score="874" last-seen="1663439847"/>
+    <application id="org.gnome.gedit.desktop" score="2" last-seen="1663336017"/>
+    <application id="microsoft-edge.desktop" score="138" last-seen="1662884672"/>
+    <application id="msedge-jdklklfpinionkgpmghaghehojplfjio-Default.desktop" score="41.5" last-seen="1663079653"/>
+    <application id="org.gnome.Calculator.desktop" score="5" last-seen="1662999490"/>
+    <application id="firefox.desktop" score="46.5" last-seen="1663095484"/>
+    <application id="org.gnome.Terminal.desktop" score="1419.5" last-seen="1663439677"/>
+    <application id="msedge-ncefdmieidfjbdhmeophbpkmaappleac-Default.desktop" score="271.5" last-seen="1663439798"/>
+    <application id="org.gnome.Totem.desktop" score="33" last-seen="1663071106"/>
+    <application id="spotify_spotify.desktop" score="302" last-seen="1663442138"/>
+    <application id="msedge-jgeocpdicgmkeemopbanhokmhcgcflmi-Default.desktop" score="2101.5" last-seen="1663440602"/>
+    <application id="code.desktop" score="6409.5" last-seen="1663440306"/>
+    <application id="gnome-system-monitor.desktop" score="3" last-seen="1663271344"/>
+    <application id="org.gnome.Extensions.desktop" score="223.5" last-seen="1663433405"/>
   </context>
 </application-state>

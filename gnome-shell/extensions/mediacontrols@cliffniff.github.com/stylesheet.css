@@ -1,7 +1,7 @@
 .popup-menu-button {
-    border-radius: 99px;
+    border-radius: 5px;
     padding: 0.4em;
-    margin: 0.1em;
+    margin: 0em;
 }
 
 .popup-menu-button:hover {
@@ -16,7 +16,6 @@
     border-radius: 99px;
     background-color: rgba(160, 160, 160, 0.2);
 }
-
 .no-vertical-spacing {
     margin: 0px auto;
     padding: 0px auto;

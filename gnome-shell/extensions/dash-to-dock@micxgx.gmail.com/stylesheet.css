@@ -15,7 +15,8 @@
   #dashtodockContainer.bottom #dash .dash-item-container .show-apps {
     padding: 2px;
     padding-bottom: 14px;
-    padding-top: 10px; }
+    padding-top: 10px;
+    border-radius: 100px; }
 
 #dashtodockContainer.bottom.shrink #dash .dash-background {
   margin-bottom: 1px;
@@ -62,7 +63,8 @@
   #dashtodockContainer.top #dash .dash-item-container .show-apps {
     padding: 2px;
     padding-top: 14px;
-    padding-bottom: 10px; }
+    padding-bottom: 10px;
+    border-radius: 100px; }
 
 #dashtodockContainer.top.shrink #dash .dash-background {
   margin-top: 1px;
@@ -111,7 +113,8 @@
   #dashtodockContainer.left #dash .dash-item-container .show-apps {
     padding: 2px;
     padding-left: 14px;
-    padding-right: 10px; }
+    padding-right: 10px;
+    border-radius: 100px; }
 
 #dashtodockContainer.left.shrink #dash .dash-background {
   margin-left: 1px;
@@ -160,7 +163,8 @@
   #dashtodockContainer.right #dash .dash-item-container .show-apps {
     padding: 2px;
     padding-right: 14px;
-    padding-left: 10px; }
+    padding-left: 10px;
+    border-radius: 100px; }
 
 #dashtodockContainer.right.shrink #dash .dash-background {
   margin-right: 1px;
@@ -526,3 +530,24 @@
   background-image: url("./media/highlight_stacked_bg_h.svg");
   background-position: 0px 0px;
   background-size: contain; }
+  #dashtodockContainer .overview-icon {
+      padding-top:0px;
+      padding-bottom:4px;
+      padding-right: 0px;
+      padding-left: 0px;
+  }
+
+  #dashtodockContainer.icon {
+      padding-top:2px;
+      padding-bottom:2px;
+      padding-right: 0px;
+      padding-left: 0px;
+  }
+.app-well-app {
+  border-radius: 13px; }
+
+.app-well-app * {
+  border-radius: 13px; }
+
+.show-apps * {
+  border-radius: 13px; }

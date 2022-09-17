@@ -1,5 +1,5 @@
 /* extension.js
- * 
+ *
  * This is a fork of <https://extensions.gnome.org/extension/4478/net-speed/>.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,6 @@
 
 /* exported init */
 
-
 const { GObject, St, Clutter, GLib, Gio } = imports.gi;
 
 const Main = imports.ui.main;
@@ -30,10 +29,15 @@ const PopupMenu = imports.ui.popupMenu;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Settings = Me.imports.settings;
+const Util = imports.misc.util;
+const Gettext = imports.gettext;
+const GettextDomain = Me.metadata['gettext-domain'];
+const Domain = Gettext.domain(GettextDomain);
+const Shell = imports.gi.Shell;
 
-const netSpeedUnits = [
-    'B/s', 'K/s', 'M/s', 'G/s', 'T/s', 'P/s', 'E/s', 'Z/s', 'Y/s'
-];
+const _ = Domain.gettext;
+
+const netSpeedUnits = ['B/s', 'K/s', 'M/s', 'G/s', 'T/s', 'P/s', 'E/s', 'Z/s', 'Y/s'];
 
 let lastTotalNetDownBytes = 0;
 let lastTotalNetUpBytes = 0;
@@ -43,7 +47,7 @@ let lastCPUTotal = 0;
 
 // See <https://github.com/AlynxZhou/gnome-shell-extension-net-speed>.
 const getCurrentNetSpeed = (refreshInterval) => {
-    const netSpeed = { 'down': 0, 'up': 0 };
+    const netSpeed = { down: 0, up: 0 };
 
     try {
         const inputFile = Gio.File.new_for_path('/proc/net/dev');
@@ -52,7 +56,7 @@ const getCurrentNetSpeed = (refreshInterval) => {
         // If we want new operator, we need to pass params in object.
         // Short param is only used for static constructor.
         const dataInputStream = new Gio.DataInputStream({
-            'base_stream': fileInputStream
+            base_stream: fileInputStream,
         });
 
         // Caculate the sum of all interfaces' traffic line by line.
@@ -79,7 +83,8 @@ const getCurrentNetSpeed = (refreshInterval) => {
             const networkInterface = fields[0];
             const currentInterfaceDownBytes = Number.parseInt(fields[1]);
             const currentInterfaceUpBytes = Number.parseInt(fields[9]);
-            if (networkInterface == 'lo' ||
+            if (
+                networkInterface == 'lo' ||
                 // Created by python-based bandwidth manager "traffictoll".
                 networkInterface.match(/^ifb[0-9]+/) ||
                 // Created by lxd container manager.
@@ -90,7 +95,8 @@ const getCurrentNetSpeed = (refreshInterval) => {
                 networkInterface.match(/^tun[0-9]+/) ||
                 networkInterface.match(/^tap[0-9]+/) ||
                 isNaN(currentInterfaceDownBytes) ||
-                isNaN(currentInterfaceUpBytes)) {
+                isNaN(currentInterfaceUpBytes)
+            ) {
                 continue;
             }
 
@@ -127,7 +133,7 @@ const getCurrentCPUUsage = () => {
         const inputFile = Gio.File.new_for_path('/proc/stat');
         const fileInputStream = inputFile.read(null);
         const dataInputStream = new Gio.DataInputStream({
-            'base_stream': fileInputStream
+            base_stream: fileInputStream,
         });
 
         let currentCPUUsed = 0;
@@ -172,7 +178,7 @@ const getCurrentCPUUsage = () => {
         logError(e);
     }
     return currentCPUUsage;
-}
+};
 
 const getCurrentMemoryUsage = () => {
     let currentMemoryUsage = 0;
@@ -181,7 +187,7 @@ const getCurrentMemoryUsage = () => {
         const inputFile = Gio.File.new_for_path('/proc/meminfo');
         const fileInputStream = inputFile.read(null);
         const dataInputStream = new Gio.DataInputStream({
-            'base_stream': fileInputStream
+            base_stream: fileInputStream,
         });
 
         let memTotal = -1;
@@ -228,7 +234,7 @@ const getCurrentMemoryUsage = () => {
         logError(e);
     }
     return currentMemoryUsage;
-}
+};
 
 const formatNetSpeedWithUnit = (amount) => {
     let unitIndex = 0;
@@ -255,17 +261,23 @@ const formatNetSpeedWithUnit = (amount) => {
 };
 
 // Format a usage value in [0, 1] as an integer percent value.
-const formatUsageVal = (usage) => {
-  return Math.round(usage * 100).toString().padStart(3) + "%";
-}
+const formatUsageVal = (showPercentSign, usage) => {
+    return (
+        Math.round(usage * 100)
+            .toString()
+            .padStart(3) + (showPercentSign ? '%' : '')
+    );
+};
 
-const toDisplayString = (texts, enable, cpuUsage, memoryUsage, netSpeed) => {
+const toDisplayString = (showPercentSign, texts, enable, cpuUsage, memoryUsage, netSpeed) => {
     const displayItems = [];
     if (enable.isCpuUsageEnable && cpuUsage !== null) {
-        displayItems.push(`${texts.cpuUsageText} ${formatUsageVal(cpuUsage)}`);
+        displayItems.push(`${texts.cpuUsageText} ${formatUsageVal(showPercentSign, cpuUsage)}`);
     }
     if (enable.isMemoryUsageEnable && memoryUsage !== null) {
-        displayItems.push(`${texts.memoryUsageText} ${formatUsageVal(memoryUsage)}`);
+        displayItems.push(
+            `${texts.memoryUsageText} ${formatUsageVal(showPercentSign, memoryUsage)}`,
+        );
     }
     if (enable.isDownloadSpeedEnable && netSpeed !== null) {
         displayItems.push(`${texts.downloadSpeedText} ${formatNetSpeedWithUnit(netSpeed['down'])}`);
@@ -274,7 +286,7 @@ const toDisplayString = (texts, enable, cpuUsage, memoryUsage, netSpeed) => {
         displayItems.push(`${texts.uploadSpeedText} ${formatNetSpeedWithUnit(netSpeed['up'])}`);
     }
     return displayItems.join(texts.itemSeparator);
-}
+};
 
 const Indicator = GObject.registerClass(
     class Indicator extends PanelMenu.Button {
@@ -282,29 +294,42 @@ const Indicator = GObject.registerClass(
             super._init(0.0, 'Simple System Monitor');
 
             this._label = new St.Label({
-                'y_align': Clutter.ActorAlign.CENTER,
-                'text': 'Initialization',
+                y_align: Clutter.ActorAlign.CENTER,
+                text: 'Initialization',
             });
 
             this.add_child(this._label);
 
-            let settingMenuItem = new PopupMenu.PopupMenuItem('Setting');
+            const openSystemMonitorItem = new PopupMenu.PopupMenuItem(_('Open System Monitor'));
+            openSystemMonitorItem.connect('activate', () => {
+                const appSystem = Shell.AppSystem.get_default();
+                const systemMonitorApp = appSystem.lookup_app('gnome-system-monitor.desktop');
+                systemMonitorApp.activate();
+            });
+            this.menu.addMenuItem(openSystemMonitorItem);
+
+            const settingMenuItem = new PopupMenu.PopupMenuItem(_('Setting'));
             settingMenuItem.connect('activate', () => {
-                ExtensionUtils.openPrefs();
+                if (typeof ExtensionUtils.openPrefs === 'function') {
+                    ExtensionUtils.openPrefs();
+                } else {
+                    Util.spawn(['gnome-shell-extension-prefs', Me.uuid]);
+                }
             });
             this.menu.addMenuItem(settingMenuItem);
         }
 
-        setFontFamily(fontFamily) {
-            return this._label.set_style(`font-family: "${fontFamily}";`);
+        setFontStyle(fontFamily, fontSize, textColor) {
+            return this._label.set_style(
+                `font-family: "${fontFamily}";font-size: ${fontSize}px; color: ${textColor};`,
+            );
         }
 
         setText(text) {
             return this._label.set_text(text);
         }
-    }
+    },
 );
-
 
 class Extension {
     constructor(uuid) {
@@ -333,17 +358,23 @@ class Extension {
             isMemoryUsageEnable: this._prefs.IS_MEMORY_USAGE_ENABLE.get(),
             isDownloadSpeedEnable: this._prefs.IS_DOWNLOAD_SPEED_ENABLE.get(),
             isUploadSpeedEnable: this._prefs.IS_UPLOAD_SPEED_ENABLE.get(),
-        }
+        };
+
+        this._showPercentSign = this._prefs.SHOW_PERCENT_SIGN.get();
 
         this._refresh_interval = this._prefs.REFRESH_INTERVAL.get();
 
         this._indicator = new Indicator();
 
-        this._indicator.setFontFamily(this._prefs.FONT_FAMILY.get());
+        this._update_text_style();
 
         Main.panel.addToStatusArea(this._uuid, this._indicator, 0, 'right');
 
-        this._timeout = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT_IDLE, this._refresh_interval, this._refresh_monitor.bind(this));
+        this._timeout = GLib.timeout_add_seconds(
+            GLib.PRIORITY_DEFAULT_IDLE,
+            this._refresh_interval,
+            this._refresh_monitor.bind(this),
+        );
 
         this._listen_setting_change();
     }
@@ -360,6 +391,14 @@ class Extension {
         }
     }
 
+    _update_text_style() {
+        this._indicator.setFontStyle(
+            this._prefs.FONT_FAMILY.get(),
+            this._prefs.FONT_SIZE.get(),
+            this._prefs.TEXT_COLOR.get(),
+        );
+    }
+
     _refresh_monitor() {
         let currentCPUUsage = null;
         let currentMemoryUsage = null;
@@ -373,12 +412,23 @@ class Extension {
         if (this._enable.isDownloadSpeedEnable || this._enable.isUploadSpeedEnable) {
             currentNetSpeed = getCurrentNetSpeed(this._refresh_interval);
         }
-        const displayText = toDisplayString(this._texts, this._enable, currentCPUUsage, currentMemoryUsage, currentNetSpeed);
+        const displayText = toDisplayString(
+            this._showPercentSign,
+            this._texts,
+            this._enable,
+            currentCPUUsage,
+            currentMemoryUsage,
+            currentNetSpeed,
+        );
         this._indicator.setText(displayText);
         return GLib.SOURCE_CONTINUE;
     }
 
     _listen_setting_change() {
+        this._prefs.SHOW_PERCENT_SIGN.changed(() => {
+            this._showPercentSign = this._prefs.SHOW_PERCENT_SIGN.get();
+        });
+
         this._prefs.IS_CPU_USAGE_ENABLE.changed(() => {
             this._enable.isCpuUsageEnable = this._prefs.IS_CPU_USAGE_ENABLE.get();
         });
@@ -415,20 +465,25 @@ class Extension {
             this._texts.itemSeparator = this._prefs.ITEM_SEPARATOR.get();
         });
 
-        this._prefs.FONT_FAMILY.changed(() => {
-            this._indicator.setFontFamily(this._prefs.FONT_FAMILY.get());
-        });
+        this._prefs.FONT_FAMILY.changed(() => this._update_text_style());
+        this._prefs.FONT_SIZE.changed(() => this._update_text_style());
+        this._prefs.TEXT_COLOR.changed(() => this._update_text_style());
 
         this._prefs.REFRESH_INTERVAL.changed(() => {
             this._refresh_interval = this._prefs.REFRESH_INTERVAL.get();
             if (this._timeout != null) {
                 GLib.source_remove(this._timeout);
             }
-            this._timeout = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT_IDLE, this._refresh_interval, this._refresh_monitor.bind(this));
+            this._timeout = GLib.timeout_add_seconds(
+                GLib.PRIORITY_DEFAULT_IDLE,
+                this._refresh_interval,
+                this._refresh_monitor.bind(this),
+            );
         });
     }
 
     _destory_setting_change_listener() {
+        this._prefs.SHOW_PERCENT_SIGN.disconnect();
         this._prefs.IS_CPU_USAGE_ENABLE.disconnect();
         this._prefs.IS_MEMORY_USAGE_ENABLE.disconnect();
         this._prefs.IS_DOWNLOAD_SPEED_ENABLE.disconnect();
@@ -440,9 +495,12 @@ class Extension {
         this._prefs.ITEM_SEPARATOR.disconnect();
         this._prefs.REFRESH_INTERVAL.disconnect();
         this._prefs.FONT_FAMILY.disconnect();
+        this._prefs.FONT_SIZE.disconnect();
+        this._prefs.TEXT_COLOR.disconnect();
     }
 }
 
 function init(meta) {
+    ExtensionUtils.initTranslations();
     return new Extension(meta.uuid);
 }
